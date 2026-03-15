@@ -67,14 +67,20 @@ if (process.env.NODE_ENV === 'development') {
 // Static files for uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/complaint_system')
+// server.js
+const mongoURI = process.env.MONGODB_URI;
+
+if (!mongoURI) {
+  logger.error('MONGODB_URI not set. Set it in Render Environment Variables.');
+  process.exit(1);
+}
+
+mongoose.connect(mongoURI)
   .then(() => logger.info('MongoDB Connected'))
   .catch(err => {
     logger.error('MongoDB connection error:', err);
     process.exit(1);
   });
-
 // Socket.io connection handling
 io.on('connection', (socket) => {
   logger.info(`New client connected: ${socket.id}`);
