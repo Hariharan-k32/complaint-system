@@ -1,0 +1,27 @@
+{
+  "name": "complaint-system",
+  "version": "1.0.0",
+  "description": "A full-stack **MERN** (MongoDB, Express.js, React.js, Node.js) application for managing citizen complaints and service requests with real-time updates, analytics, role-based access control, and a modern professional UI.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hariharan-k32/complaint-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Hariharan-k32/complaint-system/issues"
+  },
+  "homepage": "https://github.com/Hariharan-k32/complaint-system#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.3.0"
+  }
+}
