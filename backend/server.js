@@ -32,7 +32,7 @@ const io = socketio(server, {
     credentials: true
   }
 });
-
+app.use(express.static('public'));
 // Make io accessible in routes
 app.set('io', io);
 
