@@ -1,3 +1,4 @@
+
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
@@ -32,7 +33,7 @@ const io = socketio(server, {
     credentials: true
   }
 });
-app.use(express.static('public'));
+
 // Make io accessible in routes
 app.set('io', io);
 
@@ -67,9 +68,8 @@ if (process.env.NODE_ENV === 'development') {
 // Static files for uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// server.js
+// MongoDB connection
 const mongoURI = process.env.MONGODB_URI;
-
 if (!mongoURI) {
   logger.error('MONGODB_URI not set. Set it in Render Environment Variables.');
   process.exit(1);
@@ -81,6 +81,7 @@ mongoose.connect(mongoURI)
     logger.error('MongoDB connection error:', err);
     process.exit(1);
   });
+
 // Socket.io connection handling
 io.on('connection', (socket) => {
   logger.info(`New client connected: ${socket.id}`);
@@ -112,6 +113,13 @@ app.use('/api/v1/analytics', analyticsRoutes);
 // Health check
 app.get('/api/v1/health', (req, res) => {
   res.json({ success: true, message: 'Server is running', timestamp: new Date() });
+});
+
+// Serve React frontend
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 // Error handler (must be last)
